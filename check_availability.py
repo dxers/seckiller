@@ -1,8 +1,8 @@
 import json
 from pyparsing import restOfLine
 import requests
-import retrying
-
+from retrying import retry
+import timeout_decorator
 
 '''
 Phone 14 Pro Max 128GB 深空黑色 MQ833CH/A
@@ -37,7 +37,8 @@ iPhone 14 Pro Max 1TB 金色 MQ8L3CH/A
 
 iPhone 14 Pro Max 1TB 暗紫色 MQ8M3CH/A
 '''
-
+@retry(stop_max_attempt_number=3)
+@timeout_decorator.timeout(10)
 def get_availability():
     stores={"R448":"王府井","R388":"西单大悦城","R320":"三里屯","R479":"华贸购物中心","R645":"朝阳大悦城"}
     iphone_url=r'https://reserve-prime.apple.com/CN/zh_CN/reserve/A/availability.json'
