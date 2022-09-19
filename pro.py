@@ -78,7 +78,6 @@ def refresh_nearby(driver):
         select_location = driver.find_elements(By.XPATH,
                                            '//*[@class="rs-edit-location-button as-buttonlink icon icon-after icon-chevrondown"]')
         # 如果还没有打开
-        print("select_location", select_location)
         if select_location:
             driver.execute_script("arguments[0].click();", select_location[0])
             time.sleep(1)
