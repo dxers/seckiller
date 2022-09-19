@@ -181,7 +181,16 @@ def fulfill_information(driver):
                                          'rs-checkout-continue-button-bottom')
     driver.execute_script("arguments[0].click();", element_endPay)
 
-    time.sleep(600)
+    for _ in range(5):
+        # 有可能会卡，多按几次按钮
+        try:
+            element_endPay = driver.find_element(By.ID,
+                                                 'rs-checkout-continue-button-bottom')
+            driver.execute_script("arguments[0].click();", element_endPay)
+        except:
+            break
+
+    time.sleep(60)
 
 
 def main(driver):
@@ -203,7 +212,7 @@ def main(driver):
         except:
             return -1
     if not isOK:
-        for _ in trange(300):
+        for _ in trange(200):
             # 检查库存，5分钟后刷新页面
             available=get_availability()
             if not available:
